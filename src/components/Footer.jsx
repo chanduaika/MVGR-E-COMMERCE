@@ -16,7 +16,7 @@ const Footer = () => {
                         <div className={styles.socials}>
                             <a href="#" className={styles.socialLink}><FiGithub /></a>
                             <a href="#" className={styles.socialLink}><FiTwitter /></a>
-                            <a href="#" className={styles.socialLink}><FiInstagram /></a>
+                            <a href="https://www.instagram.com/_______pablo_escobar_?igsh=bTAwbXdyOW5raXpv" target="_blank" rel="noopener noreferrer" className={styles.socialLink}><FiInstagram /></a>
                         </div>
                     </div>
                 </div>
