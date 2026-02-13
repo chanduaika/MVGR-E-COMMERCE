@@ -1,0 +1,121 @@
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: color var(--transition-fast);
+}
+
+.backBtn:hover {
+    color: var(--color-text);
+}
+
+.formCard {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.typeSelector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.typeBtn {
+    flex: 1;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-muted);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.activeLost {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+.activeFound {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: inherit;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.row>* {
+    flex: 1;
+}
+
+.btnLost {
+    background: var(--color-error);
+}
+
+.btnLost:hover {
+    background: #dc2626;
+}
+
+.btnFound {
+    background: var(--color-success);
+}
+
+.btnFound:hover {
+    background: #059669;
+}

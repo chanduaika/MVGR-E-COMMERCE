@@ -1,0 +1,50 @@
+.footer {
+    background: var(--color-surface);
+    border-top: 1px solid var(--glass-border);
+    padding: 3rem 0 1.5rem;
+    margin-top: auto;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.brand p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.socials {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socialLink {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    transition: color var(--transition-fast);
+}
+
+.socialLink:hover {
+    color: var(--color-primary);
+}
+
+.copyright {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+}
