@@ -11,14 +11,14 @@ import clsx from 'clsx';
 const LostFound = () => {
     const { lostItems } = useMarket();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('lost'); // 'lost' or 'found'
+    const [activeTab, setActiveTab] = useState('all'); // 'all', 'lost', or 'found'
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredItems = lostItems.filter(item =>
-        item.type === activeTab &&
-        (item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.location.toLowerCase().includes(searchTerm.toLowerCase()))
+        (activeTab === 'all' || item.type === activeTab) &&
+        ((item.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (item.description || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (item.location || '').toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     return (
@@ -30,6 +30,12 @@ const LostFound = () => {
 
                     <div className={styles.actions}>
                         <div className={styles.tabs}>
+                            <button
+                                className={clsx(styles.tab, activeTab === 'all' && styles.activeTab)}
+                                onClick={() => setActiveTab('all')}
+                            >
+                                All Items
+                            </button>
                             <button
                                 className={clsx(styles.tab, activeTab === 'lost' && styles.activeTab)}
                                 onClick={() => setActiveTab('lost')}
@@ -53,7 +59,7 @@ const LostFound = () => {
                         <FiSearch className={styles.searchIcon} />
                         <input
                             type="text"
-                            placeholder={`Search ${activeTab} items...`}
+                            placeholder={`Search ${activeTab === 'all' ? 'all' : activeTab} items...`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className={styles.searchInput}
@@ -68,7 +74,7 @@ const LostFound = () => {
 
                     {filteredItems.length === 0 && (
                         <div className={styles.emptyState}>
-                            <p>No {activeTab} items reported matching "{searchTerm}"</p>
+                            <p>No items found matching "{searchTerm}"</p>
                         </div>
                     )}
                 </div>

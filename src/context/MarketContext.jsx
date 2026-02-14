@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
     collection,
     addDoc,
+    deleteDoc,
+    updateDoc,
+    doc,
     onSnapshot,
     query,
     orderBy,
@@ -81,12 +84,36 @@ export const MarketProvider = ({ children }) => {
         }
     };
 
+    const deleteLostItem = async (id) => {
+        try {
+            await deleteDoc(doc(db, 'lostFound', id));
+        } catch (error) {
+            console.error("Error deleting lost item:", error);
+            throw error;
+        }
+    };
+
+    const updateLostItem = async (id, data) => {
+        try {
+            const itemRef = doc(db, 'lostFound', id);
+            await updateDoc(itemRef, {
+                ...data,
+                updatedAt: serverTimestamp()
+            });
+        } catch (error) {
+            console.error("Error updating lost item:", error);
+            throw error;
+        }
+    };
+
     const value = {
         products,
         lostItems,
         loading,
         addProduct,
         addLostItem,
+        deleteLostItem,
+        updateLostItem
     };
 
     return (

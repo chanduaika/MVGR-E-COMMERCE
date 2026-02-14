@@ -87,3 +87,33 @@
 .btn {
     margin-top: auto;
 }
+
+.ownerActions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.actionBtn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+    transform: scale(1.1);
+    background: white;
+    color: var(--color-primary);
+}

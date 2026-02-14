@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { useMarket } from '../context/MarketContext';
@@ -11,18 +11,21 @@ import styles from './ReportItem.module.css';
 
 const ReportItem = () => {
     const { user } = useAuth();
-    const { addLostItem } = useMarket();
+    const { addLostItem, updateLostItem } = useMarket();
     const navigate = useNavigate();
+    const location = useLocation();
+    const editingItem = location.state?.item;
+
     const [loading, setLoading] = useState(false);
-    const [type, setType] = useState('lost');
+    const [type, setType] = useState(editingItem?.type || 'lost');
 
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        location: '',
-        date: new Date().toISOString().split('T')[0],
-        contact: user?.mobile || '',
-        image: '',
+        title: editingItem?.title || '',
+        description: editingItem?.description || '',
+        location: editingItem?.location || '',
+        date: editingItem?.date || new Date().toISOString().split('T')[0],
+        contact: editingItem?.contact || user?.mobile || '',
+        image: editingItem?.image || '',
     });
 
     const handleChange = (e) => {
@@ -33,15 +36,26 @@ const ReportItem = () => {
         e.preventDefault();
         setLoading(true);
 
-        setTimeout(() => {
-            addLostItem({
-                ...formData,
-                type,
-                reporterReg: user?.registerNumber,
-            });
-            setLoading(false);
+        try {
+            if (editingItem) {
+                await updateLostItem(editingItem.id, {
+                    ...formData,
+                    type,
+                });
+            } else {
+                await addLostItem({
+                    ...formData,
+                    type,
+                    reporterReg: user?.registerNumber,
+                });
+            }
             navigate('/lost-found');
-        }, 1000);
+        } catch (error) {
+            console.error("Failed to save item:", error);
+            alert("Failed to save item: " + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -52,20 +66,20 @@ const ReportItem = () => {
                 </button>
 
                 <div className={styles.formCard}>
-                    <h1 className={styles.title}>Report Item</h1>
+                    <h1 className={styles.title}>{editingItem ? 'Edit Item' : 'Report Item'}</h1>
 
                     <div className={styles.typeSelector}>
                         <button
                             className={`${styles.typeBtn} ${type === 'lost' ? styles.activeLost : ''}`}
                             onClick={() => setType('lost')}
                         >
-                            I Lost Something
+                            {editingItem ? 'Lost Item' : 'I Lost Something'}
                         </button>
                         <button
                             className={`${styles.typeBtn} ${type === 'found' ? styles.activeFound : ''}`}
                             onClick={() => setType('found')}
                         >
-                            I Found Something
+                            {editingItem ? 'Found Item' : 'I Found Something'}
                         </button>
                     </div>
 
@@ -131,7 +145,7 @@ const ReportItem = () => {
                             fullWidth
                             className={type === 'lost' ? styles.btnLost : styles.btnFound}
                         >
-                            Report {type === 'lost' ? 'Lost' : 'Found'} Item
+                            {editingItem ? 'Update Item' : `Report ${type === 'lost' ? 'Lost' : 'Found'} Item`}
                         </Button>
                     </form>
                 </div>
